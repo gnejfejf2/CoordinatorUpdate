@@ -49,7 +49,7 @@ class MainViewController : SuperViewControllerSetting<MainViewModel>{
     
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
-        
+        accommodationCollectionView.reloadData()
     }
     
     override func uiDrawing() {

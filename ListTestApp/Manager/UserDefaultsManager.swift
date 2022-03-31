@@ -3,7 +3,7 @@
 
 
 
-final class UserDefaultsManager : UserDefaultsManagerProtocl{
+final class UserDefaultsManager : UserDefaultsManagerProtocol{
    
     
     
@@ -14,7 +14,7 @@ final class UserDefaultsManager : UserDefaultsManagerProtocl{
  
 }
 
-final class UserDefaultsMockManager : UserDefaultsManagerProtocl{
+final class UserDefaultsMockManager : UserDefaultsManagerProtocol{
     
    
     static let shared: UserDefaultsManager =  UserDefaultsManager()

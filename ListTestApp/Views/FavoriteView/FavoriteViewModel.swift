@@ -14,9 +14,9 @@ class FavortieViewModel : ViewModelBuilderProtocol {
     
     struct Input {
         let viewWillAppear : Driver<Void>
-        let bottomScrollTriger : Driver<Void>
         let addFavoriteAction : Driver<Void>
         let sortTypeAction : Driver<SortType>
+        let accomodationClick : Driver<Accommodation>
     }
     
     struct Output {
@@ -25,7 +25,7 @@ class FavortieViewModel : ViewModelBuilderProtocol {
     }
     
     struct Builder {
-        let userDefalutManager : UserDefaultsManagerProtocl
+        var userDefalutManager : UserDefaultsManagerProtocol
         let coordinator : FavoriteViewCoordinator
     }
     
@@ -33,7 +33,7 @@ class FavortieViewModel : ViewModelBuilderProtocol {
     let networkAPI : NetworkServiceProtocol
     let errorTracker = ErrorTracker()
     let activityIndicator = ActivityIndicator()
-    let builder : Builder
+    var builder : Builder
     let disposeBag = DisposeBag()
     
     
@@ -45,7 +45,7 @@ class FavortieViewModel : ViewModelBuilderProtocol {
     
     
     func transform(input: Input) -> Output {
-        let accommodationModels = BehaviorSubject<[AccommodationSectionModel]>(value: [AccommodationSectionModel(name: "좋아요에 등록한 숙소", items: UserDefaultsManager.shared.favoriteList)])
+        let accommodationModels = BehaviorSubject<[AccommodationSectionModel]>(value: [AccommodationSectionModel(name: "즐겨찾기에 등록한 숙소", items: builder.userDefalutManager.getFavoriteList())])
         let sortType = PublishSubject<SortType>()
         
         
@@ -57,7 +57,7 @@ class FavortieViewModel : ViewModelBuilderProtocol {
             .map({ [weak self] (original , sortType) -> [AccommodationSectionModel] in
                 guard let self = self else { return [] }
                 var sectionModels = original
-                sectionModels[0].items = self.builder.userDefalutManager.favoriteList.sortAction(sortType: sortType , userManager: self.builder.userDefalutManager)
+                sectionModels[0].items = self.builder.userDefalutManager.getFavoriteList().sortAction(sortType: sortType , userManager: self.builder.userDefalutManager)
                 return sectionModels
             })
             .asDriverOnErrorNever()
@@ -91,6 +91,13 @@ class FavortieViewModel : ViewModelBuilderProtocol {
             }
             .disposed(by: disposeBag)
 
+        input.accomodationClick
+            .drive(onNext: { [weak self] item in
+                guard let self = self else { return }
+                self.builder.coordinator.detailViewOpen(accomodation: item)
+            })
+            .disposed(by: disposeBag)
+        
             
         return .init(
             accommodations: accommodationModels.asDriverOnErrorNever() ,

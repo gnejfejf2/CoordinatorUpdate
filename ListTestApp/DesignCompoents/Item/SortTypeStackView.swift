@@ -42,14 +42,14 @@ class SortTypeStackView : UIStackView , ComponentSettingProtocol {
     
     var item : SortType
     override init(frame: CGRect) {
-        item = .RecommendedOrder
+        item = .RecentFavorite
         super.init(frame: frame)
         
         uiSetting()
     }
 
     required init(coder aDecoder: NSCoder) {
-        item = .RecommendedOrder
+        item = .RecentFavorite
         super.init(coder: aDecoder)
         uiSetting()
     }

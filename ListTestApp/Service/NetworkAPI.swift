@@ -27,7 +27,6 @@ extension NetworkAPI : TargetType {
     var path: String {
         switch self {
         case .search(let page) :
-            print("/json/\(page).json")
             return "/json/\(page).json"
         }
     }
@@ -47,8 +46,8 @@ extension NetworkAPI : TargetType {
     }
     var sampleData: Data {
         switch self {
-        case .search(let parmas ) :
-            return stubbedResponse("Search\(parmas))")
+        case .search(let page ) :
+            return stubbedResponse("Search\(page)")
         }
     }
     

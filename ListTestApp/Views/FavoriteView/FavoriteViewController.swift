@@ -80,7 +80,7 @@ class FavoriteViewController : SuperViewControllerSetting<FavortieViewModel>{
         view.addSubview(accommodationCollectionView)
         view.addSubview(sortTypeSettingView)
         view.addSubview(emptyView)
-        navigationItem.title = "좋아요"
+        navigationItem.title = "즐겨찾기"
         
         accommodationCollectionView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
@@ -114,9 +114,10 @@ class FavoriteViewController : SuperViewControllerSetting<FavortieViewModel>{
         let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
             .map { _ in }
             
-        let bottomScrollTriger = accommodationCollectionView.rx.reachedBottom(offset: 10)
         
         let addFavoriteAction = emptyButton.rx.tap
+        
+        let accomodationClick = accommodationCollectionView.rx.modelSelected(Accommodation.self)
         
         sortTypeSettingView.sortTypeViewArray.forEach{ item in
             item.rx.tapGesture()
@@ -130,16 +131,19 @@ class FavoriteViewController : SuperViewControllerSetting<FavortieViewModel>{
                 .disposed(by: disposeBag)
         }
         
+        
+        
         let output = viewModel.transform(input: .init(
             viewWillAppear: viewWillAppear.asDriverOnErrorNever() ,
-            bottomScrollTriger : bottomScrollTriger.asDriverOnErrorNever(),
             addFavoriteAction : addFavoriteAction.asDriverOnErrorNever(),
-            sortTypeAction: sortTypeAction.asDriverOnErrorNever()
+            sortTypeAction: sortTypeAction.asDriverOnErrorNever(),
+            accomodationClick : accomodationClick.asDriverOnErrorNever()
         ))
         
         
         
         output.accommodations
+            .filter{ $0.count != 0 }
             .drive(accommodationCollectionView.rx.items(dataSource: accommodationDataSource))
             .disposed(by: disposeBag)
         
@@ -151,12 +155,13 @@ class FavoriteViewController : SuperViewControllerSetting<FavortieViewModel>{
         output.sortType
             .drive{ [weak self] item in
                 guard let self = self else { return }
+                //self.accommodationCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
                 self.sortTypeSettingView.sortTypeSetting(type: item)
             }
             .disposed(by: disposeBag)
         
         //초기값 부여
-        sortTypeAction.onNext(.RecommendedOrder)
+        sortTypeAction.onNext(.RecentFavorite)
     }
     
 }

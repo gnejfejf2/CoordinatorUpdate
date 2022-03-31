@@ -21,4 +21,7 @@ extension UIColor {
     class var darkGray1 : UIColor{
         return UIColor(named: "darkGray1")!
     }
+    class var accentColor : UIColor{
+        return UIColor(named: "accentColor")!
+    }
 }

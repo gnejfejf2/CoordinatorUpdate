@@ -83,7 +83,7 @@ class AccommodationCollectionViewCell: UICollectionViewCell , CellSettingProtocl
     
     //Other
     var item: Accommodation?
-    var userDefaultManager : UserDefaultsManagerProtocl?
+    var userDefaultManager : UserDefaultsManagerProtocol?
     
     override init(frame: CGRect) {
         super.init(frame: frame)

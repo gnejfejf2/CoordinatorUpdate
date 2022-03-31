@@ -28,7 +28,7 @@ extension AccommodationSectionModel : AnimatableSectionModelType {
 }
 
 extension AccommodationSectionModel {
-    func itemSort(sortType : SortType , userManager : UserDefaultsManagerProtocl) -> AccommodationSectionModel {
+    func itemSort(sortType : SortType , userManager : UserDefaultsManagerProtocol) -> AccommodationSectionModel {
         return AccommodationSectionModel(name: self.name, items: self.items.sortAction(sortType: sortType , userManager : userManager))
     }
     

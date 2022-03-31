@@ -27,8 +27,12 @@ class SortTypeSettingView : BottomSheetView , BottomSheetItemSettingProtocol {
         $0.text = "정렬"
     }
     
-    var recommendedOrder = SortTypeStackView(item : .RecommendedOrder).then{
-        $0.typeLabel.text =  "추천순"
+    var recentFavorite = SortTypeStackView(item : .RecentFavorite).then{
+        $0.typeLabel.text =  "최근 즐겨찾기 등록순"
+        $0.unSelecteSetting()
+    }
+    var lateFavorite = SortTypeStackView(item : .LateFavorite).then{
+        $0.typeLabel.text =  "늦은 즐겨찾기 등록순"
         $0.unSelecteSetting()
     }
     var highestPrice = SortTypeStackView(item : .HighestPrice).then{
@@ -47,17 +51,10 @@ class SortTypeSettingView : BottomSheetView , BottomSheetItemSettingProtocol {
         $0.typeLabel.text =  "낮은 평점순"
         $0.unSelecteSetting()
     }
-    var recentFavorite = SortTypeStackView(item : .RecentFavorite).then{
-        $0.typeLabel.text =  "최근 즐겨찾기 등록순"
-        $0.unSelecteSetting()
-    }
-    var lateFavorite = SortTypeStackView(item : .LateFavorite).then{
-        $0.typeLabel.text =  "늦은 즐겨찾기 등록순"
-        $0.unSelecteSetting()
-    }
+  
     
     //Other
-    lazy var sortTypeViewArray = [recommendedOrder,highestPrice,lowPrice,highestRating,lowRating,recentFavorite,lateFavorite]
+    lazy var sortTypeViewArray = [recentFavorite,lateFavorite,highestPrice,lowPrice,highestRating,lowRating]
     
     override init(frame: CGRect) {
         super.init(frame: frame)

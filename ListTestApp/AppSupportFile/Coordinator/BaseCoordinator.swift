@@ -38,7 +38,12 @@ class BaseCoordinator: Coordinator {
 extension BaseCoordinator{
     
     func detailViewOpen(accomodation : Accommodation){
-        let coordinator : DetailViewCoordinator = DetailViewCoordinator(navigationController: navigationController , parentCoordinator: self)
+        let coordinator : DetailViewCoordinator = DetailViewCoordinator(
+            builder : .init(navigationController: navigationController,
+                  parentCoordinator: self,
+                  item: accomodation)
+        )
+        
         coordinator.start()
     }
 

@@ -8,7 +8,7 @@
 import Foundation
 
 enum FavoriteChecking {
-    ///좋아요
+    ///즐겨찾기
     case Check
     ///아무상태아님
     case UnCheck

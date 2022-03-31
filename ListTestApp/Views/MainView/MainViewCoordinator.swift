@@ -15,8 +15,9 @@ class MainViewCoordinator: BaseCoordinator {
             coordinator: self
         ))
         let viewController = MainViewController(viewModel: viewModel)
+//        navigationController.show(viewController, sender: nil)
         navigationController.pushViewController(viewController, animated: false)
-//        self.navigationController = vc
+
         
     }
  

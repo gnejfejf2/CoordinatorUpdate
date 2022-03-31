@@ -8,10 +8,11 @@
 import Foundation
 
 
-protocol UserDefaultsManagerProtocl{
+protocol UserDefaultsManagerProtocol{
     
     var favoriteList : Accommodations { get set }
     
+    func getFavoriteList() -> Accommodations
     
     func favoriteCheck(accommodation : Accommodation) -> FavoriteChecking
     
@@ -20,8 +21,15 @@ protocol UserDefaultsManagerProtocl{
     mutating func clearRemoveList()
 }
 
-extension UserDefaultsManagerProtocl {
-   
+extension UserDefaultsManagerProtocol {
+   // getFavoriteList 을 함수로 만들어 접근시킨이유
+    //추후에 Core데이터로 변경시 이 함수 하나만을 수정하여 Accommodations를 리턴시키면 많은 곳을 수정할 필요가 없음
+    
+    func getFavoriteList() -> Accommodations{
+        
+        return favoriteList
+    }
+    
     func favoriteCheck(accommodation : Accommodation) -> FavoriteChecking{
         if let _ = favoriteList.firstIndex(of: accommodation) {
             return .Check

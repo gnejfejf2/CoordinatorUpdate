@@ -35,8 +35,9 @@ class FavoriteCellHeaderView : UICollectionReusableView  {
         $0.tintColor = .primaryColor
         $0.setTitleColor(.primaryColor, for: .normal)
         $0.contentHorizontalAlignment = .right
+        $0.contentVerticalAlignment = .center
         $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
-
+        $0.semanticContentAttribute = .forceRightToLeft
         $0.titleLabel?.font = UIFont.systemFont(ofSize: 14)
     }
     

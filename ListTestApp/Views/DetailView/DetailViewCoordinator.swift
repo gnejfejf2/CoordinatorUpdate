@@ -5,14 +5,31 @@
 //  Created by 강지윤 on 2022/03/30.
 //
 
-import Foundation
+import UIKit
 
-class DetailViewCoordinator : ChildBaseCoordinator {
+class DetailViewCoordinator : ChildCoordinator {
+    struct Builder {
+        let navigationController : UINavigationController
+        let parentCoordinator : BaseCoordinator
+        let item : Accommodation
+    }
     
     
-    
-    override func start() {
+    var builder: Builder
+    var navigationController: UINavigationController
+    var parentCoordinator: BaseCoordinator
+
+    init(builder : Builder) {
+        self.builder = builder
+        self.navigationController = builder.navigationController
+        self.parentCoordinator = builder.parentCoordinator
+    }
+
+   
+    func start() {
         let viewModel = DetailViewModel(builder: .init(
+            accommodation: builder.item,
+            userDefalutManager: UserDefaultsManager.shared ,
             coordinator: self
         ))
         let viewController = DetailViewController(viewModel: viewModel)

@@ -9,10 +9,8 @@ import Foundation
 
 extension Accommodations {
     
-    func sortAction(sortType : SortType , userManager : UserDefaultsManagerProtocl) -> Accommodations{
+    func sortAction(sortType : SortType , userManager : UserDefaultsManagerProtocol) -> Accommodations{
         switch sortType {
-        case .RecommendedOrder:
-            return  self.sorted{ $0.id < $1.id }
         case .HighestRating:
             return  self.sorted{ $0.rate > $1.rate }
         case .LowRating:
@@ -27,9 +25,9 @@ extension Accommodations {
         //추후의 확장성을 생각한다면 CoreData로 추가 날짜 , 아이템을 저장하는것도 좋지만
         //과제의 특성상 이렇게 대체
         case .RecentFavorite :
-            return userManager.favoriteList
+            return userManager.getFavoriteList()
         case .LateFavorite :
-            return userManager.favoriteList.reversed()
+            return userManager.getFavoriteList().reversed()
         }
         
     }
