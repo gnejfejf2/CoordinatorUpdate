@@ -54,9 +54,12 @@ class FavoriteViewController : SuperViewControllerSetting<FavortieViewModel>{
     
     var emptyButton = UIButton().then{
         $0.setTitle("추가된 즐겨찾기가 없습니다\n바로 추가 하러 가기", for: .normal)
+        $0.setTitleColor(.primaryColor, for: .normal)
+        
         $0.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         $0.titleLabel?.numberOfLines = 0
         $0.titleLabel?.textAlignment = .center
+        
         $0.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.primaryColor.cgColor

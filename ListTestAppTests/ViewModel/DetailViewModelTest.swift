@@ -18,7 +18,9 @@ import RxCocoa
 
 class DetailViewModelTest: XCTestCase {
     
-    let disposeBag = DisposeBag()
+    let disposeBag : DisposeBag = DisposeBag()
+    let mockBaseCoordinator : MockBaseCoordinator = MockBaseCoordinator()
+   
     var viewModel: DetailViewModel!
     var scheduler: TestScheduler!
 //    var viewWillAppear : PublishSubject<Void> = PublishSubject<Void>()
@@ -33,7 +35,7 @@ class DetailViewModelTest: XCTestCase {
         let mockNetworkingAPI =  NetworkingAPI(provider: MoyaProvider<NetworkAPI>(stubClosure: { _ in .immediate }))
         let coordinator = DetailViewCoordinator(builder: .init(
             navigationController: UINavigationController(),
-            parentCoordinator: MockBaseCoordinator(),
+            parentCoordinator : mockBaseCoordinator ,
             item: item)
         )
         viewModel = DetailViewModel(networkAPI: mockNetworkingAPI, builder: .init(accommodation: item, userDefalutManager: UserDefaultsMockManager.shared, coordinator: coordinator))
@@ -53,9 +55,6 @@ class DetailViewModelTest: XCTestCase {
     
     func test_로컬즐겨찾기_리스트_체크(){
         
-        
-       
-
         let observer = scheduler.createObserver(FavoriteChecking.self)
 
         scheduler.createHotObservable([
@@ -80,5 +79,8 @@ class DetailViewModelTest: XCTestCase {
 
         XCTAssertEqual(observer.events , exceptEvents)
     }
+    
+    
+    
 
 }

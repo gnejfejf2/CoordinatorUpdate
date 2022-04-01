@@ -21,6 +21,7 @@ import RxCocoa
 class MainViewModelTest: XCTestCase {
 
     let disposeBag = DisposeBag()
+    let mockBaseCoordinator : MockBaseCoordinator = MockBaseCoordinator()
     var viewModel: MainViewModel!
     var scheduler: TestScheduler!
     var accommodationSearch : PublishSubject<Void> = PublishSubject<Void>()
@@ -32,8 +33,7 @@ class MainViewModelTest: XCTestCase {
     override func setUp() {
         let mockNetworkingAPI =  NetworkingAPI(provider: MoyaProvider<NetworkAPI>(stubClosure: { _ in .immediate }))
        
-        let coordinator = MainViewCoordinator(navigationController: UINavigationController(), parentCoordinator: .init(navigationController: UINavigationController()))
-        viewModel = MainViewModel(networkAPI: mockNetworkingAPI, builder: .init(userDefalutManager : UserDefaultsMockManager.shared , coordinator : coordinator))
+        viewModel = MainViewModel(networkAPI: mockNetworkingAPI, builder: .init(userDefalutManager : UserDefaultsMockManager.shared , coordinator : mockBaseCoordinator))
         
         scheduler = TestScheduler(initialClock: 0, resolution: 0.01)
         output = viewModel.transform(input: .init(
@@ -95,5 +95,11 @@ class MainViewModelTest: XCTestCase {
         ]
         XCTAssertEqual(observer.events , exceptEvents)
     }
+
     
+    func test_디테일뷰열기(){
+        accomodationClick.onNext(.init(id: 0, name: "", thumbnail: "", description: .init(imagePath: "", subject: "", price: 0), rate: 0))
+        XCTAssertEqual(mockBaseCoordinator.detailViewOpen , true)
+    }
 }
+

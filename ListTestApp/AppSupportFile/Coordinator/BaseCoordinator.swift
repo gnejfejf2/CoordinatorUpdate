@@ -11,21 +11,7 @@ protocol BaseCoordinatorProtocol : AnyObject {
     func tabChange(flow: TabbarFlow)
 }
 
-class BaseCoordinator: BaseCoordinatorProtocol  {
-    var navigationController: UINavigationController
-    var parentCoordinator: TabBarCoordinator
-    
-    init(navigationController: UINavigationController , parentCoordinator : TabBarCoordinator) {
-        self.navigationController = navigationController
-        self.parentCoordinator = parentCoordinator
-    }
-    
-    func start() {
-        fatalError("Start method should be implemented.")
-    }
-    
-    
-}
+
 
 
 protocol BaseCoordinatorViewChangeProtocl {

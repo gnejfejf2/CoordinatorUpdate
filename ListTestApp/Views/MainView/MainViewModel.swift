@@ -25,7 +25,7 @@ class MainViewModel : ViewModelBuilderProtocol ,SearchAccomodationModelProtocol 
     
     struct Builder {
         let userDefalutManager : UserDefaultsManagerProtocol
-        let coordinator : MainViewCoordinator
+        let coordinator : BaseCoordinatorProtocol
     }
     
     var totalCount: Int = 0

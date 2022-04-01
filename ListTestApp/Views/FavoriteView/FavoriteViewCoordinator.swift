@@ -9,11 +9,17 @@ import Foundation
 
 import UIKit
 
-class FavoriteViewCoordinator: BaseCoordinator {
+class FavoriteViewCoordinator: BaseCoordinatorProtocol {
     
+    var navigationController: UINavigationController
+    var parentCoordinator: TabBarCoordinator
     
+    init(navigationController: UINavigationController , parentCoordinator : TabBarCoordinator) {
+        self.navigationController = navigationController
+        self.parentCoordinator = parentCoordinator
+    }
     
-    override func start() {
+    func start() {
         let viewModel = FavortieViewModel(builder: .init(
             userDefalutManager: UserDefaultsManager.shared,
             coordinator: self
@@ -23,6 +29,4 @@ class FavoriteViewCoordinator: BaseCoordinator {
         
     }
   
-    
-    
 }

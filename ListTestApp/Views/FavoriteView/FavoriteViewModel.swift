@@ -26,7 +26,7 @@ class FavortieViewModel : ViewModelBuilderProtocol {
     
     struct Builder {
         var userDefalutManager : UserDefaultsManagerProtocol
-        let coordinator : FavoriteViewCoordinator
+        let coordinator : BaseCoordinatorProtocol
     }
     
   
@@ -87,7 +87,7 @@ class FavortieViewModel : ViewModelBuilderProtocol {
         input.addFavoriteAction
             .drive { [weak self] _ in
                 guard let self = self else { return  }
-                self.builder.coordinator.parentCoordinator.moveTo(flow: .Main)
+                self.builder.coordinator.tabChange(flow: .Main)
             }
             .disposed(by: disposeBag)
 

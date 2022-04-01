@@ -19,6 +19,7 @@ import RxCocoa
 class FavoriteViewModelTest: XCTestCase {
     
     let disposeBag = DisposeBag()
+    let mockBaseCoordinator : MockBaseCoordinator = MockBaseCoordinator()
     var viewModel: FavortieViewModel!
     var scheduler: TestScheduler!
     var viewWillAppear : PublishSubject<Void> = PublishSubject<Void>()
@@ -38,8 +39,7 @@ class FavoriteViewModelTest: XCTestCase {
     override func setUp() {
         let mockNetworkingAPI =  NetworkingAPI(provider: MoyaProvider<NetworkAPI>(stubClosure: { _ in .immediate }))
         
-        let coordinator = FavoriteViewCoordinator(navigationController: UINavigationController(), parentCoordinator: .init(navigationController: UINavigationController()))
-        viewModel = FavortieViewModel(networkAPI: mockNetworkingAPI, builder: .init(userDefalutManager: UserDefaultsMockManager.shared, coordinator: coordinator))
+        viewModel = FavortieViewModel(networkAPI: mockNetworkingAPI, builder: .init(userDefalutManager: UserDefaultsMockManager.shared, coordinator: mockBaseCoordinator))
         
         viewModel.builder.userDefalutManager.clearRemoveList()
         testItems.forEach{
@@ -59,7 +59,7 @@ class FavoriteViewModelTest: XCTestCase {
     }
     
     func test_로컬즐겨찾기_리스트_체크(){
-       
+        
         
         
         let observer = scheduler.createObserver(Int.self)
@@ -67,15 +67,15 @@ class FavoriteViewModelTest: XCTestCase {
         scheduler.createHotObservable([.next(0 , ())])
             .bind(to: viewWillAppear)
             .disposed(by: disposeBag)
-
+        
         output.accommodations
             .asObservable()
             .map{ $0.first!.items.count }
             .bind(to: observer)
             .disposed(by: disposeBag)
-
+        
         scheduler.start()
-
+        
         
         
         let exceptEvents: [Recorded<Event<Int>>] = [
@@ -86,7 +86,7 @@ class FavoriteViewModelTest: XCTestCase {
     }
     
     func test_로컬즐겨찾기_정렬_체크(){
-       
+        
         viewModel.builder.userDefalutManager.clearRemoveList()
         testItems.forEach{
             viewModel.builder.userDefalutManager.favoriteAddDelete(accommodation: $0)
@@ -95,26 +95,26 @@ class FavoriteViewModelTest: XCTestCase {
         let observer = scheduler.createObserver(Int.self)
         
         scheduler.createHotObservable([
-                .next(0 , .RecentFavorite),
-                .next(100 , .LateFavorite),
-                .next(200 , .HighestPrice),
-                .next(300 , .LowPrice),
-                .next(400 , .HighestRating),
-                .next(500 , .LowRating)
+            .next(0 , .RecentFavorite),
+            .next(100 , .LateFavorite),
+            .next(200 , .HighestPrice),
+            .next(300 , .LowPrice),
+            .next(400 , .HighestRating),
+            .next(500 , .LowRating)
         ])
-            .bind(to: sortTypeAction)
-            .disposed(by: disposeBag)
-
+        .bind(to: sortTypeAction)
+        .disposed(by: disposeBag)
+        
         output.accommodations
             .asObservable()
             .map{ $0.first!.items.first!.id }
             .bind(to: observer)
             .disposed(by: disposeBag)
-
-        scheduler.start()
-
         
-        //ViewModel이 BehaviorSubject로 생겨 
+        scheduler.start()
+        
+        
+        //ViewModel이 BehaviorSubject로 생겨
         let exceptEvents: [Recorded<Event<Int>>] = [
             .next(0 , 1),
             .next(0 , 1),
@@ -125,6 +125,22 @@ class FavoriteViewModelTest: XCTestCase {
             .next(500 , 4)
         ]
         XCTAssertEqual(observer.events , exceptEvents)
+    }
+    
+    func test_디테일뷰열기(){
+        accomodationClick.onNext(testItems.first!)
+        XCTAssertEqual(mockBaseCoordinator.detailViewOpen , true)
+    }
+    
+    func test_탭바변경(){
+        
+        
+        
+        addFavoriteAction.onNext(())
+     
+      
+        
+        XCTAssertEqual(mockBaseCoordinator.tap , .Main)
     }
     
 }
