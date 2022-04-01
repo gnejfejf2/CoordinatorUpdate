@@ -126,6 +126,7 @@ class FavoriteViewController : SuperViewControllerSetting<FavortieViewModel>{
                 .subscribe(onNext: { [weak self] item in
                     guard let self = self else { return  }
                     self.sortTypeSettingView.hideBottomSheet()
+                    self.accommodationCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
                     self.sortTypeAction.onNext(item)
                 })
                 .disposed(by: disposeBag)
@@ -155,10 +156,10 @@ class FavoriteViewController : SuperViewControllerSetting<FavortieViewModel>{
         output.sortType
             .drive{ [weak self] item in
                 guard let self = self else { return }
-                //self.accommodationCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
                 self.sortTypeSettingView.sortTypeSetting(type: item)
-            }
+           }
             .disposed(by: disposeBag)
+        
         
         //초기값 부여
         sortTypeAction.onNext(.RecentFavorite)

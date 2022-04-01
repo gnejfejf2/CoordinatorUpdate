@@ -48,14 +48,11 @@ class MainViewModelTest: XCTestCase {
     func test_Search_1_페이지검색(){
 
         let observer = scheduler.createObserver(Int.self)
-//
-//
-//
+
         scheduler.createHotObservable([.next(100 , ())])
                     .bind(to: accommodationSearch)
                     .disposed(by: disposeBag)
-//
-//
+
         output.accommodations
             .asObservable()
             .map{ $0.first!.items.count }

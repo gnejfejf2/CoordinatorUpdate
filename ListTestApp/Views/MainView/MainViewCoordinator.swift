@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainViewCoordinator: BaseCoordinator {
+class MainViewCoordinator : BaseCoordinator {
     
     override func start() {
         let viewModel = MainViewModel(builder: .init(
@@ -15,12 +15,7 @@ class MainViewCoordinator: BaseCoordinator {
             coordinator: self
         ))
         let viewController = MainViewController(viewModel: viewModel)
-//        navigationController.show(viewController, sender: nil)
         navigationController.pushViewController(viewController, animated: false)
-
-        
     }
  
-  
-    
 }

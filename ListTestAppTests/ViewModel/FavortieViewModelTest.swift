@@ -41,6 +41,11 @@ class FavoriteViewModelTest: XCTestCase {
         let coordinator = FavoriteViewCoordinator(navigationController: UINavigationController(), parentCoordinator: .init(navigationController: UINavigationController()))
         viewModel = FavortieViewModel(networkAPI: mockNetworkingAPI, builder: .init(userDefalutManager: UserDefaultsMockManager.shared, coordinator: coordinator))
         
+        viewModel.builder.userDefalutManager.clearRemoveList()
+        testItems.forEach{
+            viewModel.builder.userDefalutManager.favoriteAddDelete(accommodation: $0)
+        }
+        
         scheduler = TestScheduler(initialClock: 0, resolution: 0.01)
         output = viewModel.transform(input:
                 .init(
@@ -55,10 +60,7 @@ class FavoriteViewModelTest: XCTestCase {
     
     func test_로컬즐겨찾기_리스트_체크(){
        
-        viewModel.builder.userDefalutManager.clearRemoveList()
-        testItems.forEach{
-            viewModel.builder.userDefalutManager.favoriteAddDelete(accommodation: $0)
-        }
+        
         
         let observer = scheduler.createObserver(Int.self)
         

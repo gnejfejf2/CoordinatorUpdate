@@ -10,14 +10,14 @@ import UIKit
 class DetailViewCoordinator : ChildCoordinator {
     struct Builder {
         let navigationController : UINavigationController
-        let parentCoordinator : BaseCoordinator
+        let parentCoordinator : BaseCoordinatorProtocol
         let item : Accommodation
     }
     
     
     var builder: Builder
     var navigationController: UINavigationController
-    var parentCoordinator: BaseCoordinator
+    var parentCoordinator: BaseCoordinatorProtocol
 
     init(builder : Builder) {
         self.builder = builder
