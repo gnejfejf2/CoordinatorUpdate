@@ -68,8 +68,6 @@ class MainViewModelTest: XCTestCase {
         XCTAssertEqual(observer.events , exceptEvents)
     }
 
-    //MainView 1페이지 검색
-    //MainView 페이징
     func test_Search_1_2_3_페이지검색(){
 
         let observer = scheduler.createObserver(Int.self)

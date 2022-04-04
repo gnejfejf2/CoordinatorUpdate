@@ -50,6 +50,10 @@ class DetailViewController : SuperViewControllerSetting<DetailViewModel>{
     
     var dommyView = UIView()
     
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.primaryColor]
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = true
         

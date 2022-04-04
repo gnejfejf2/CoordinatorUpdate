@@ -9,7 +9,7 @@ final class UserDefaultsManager : UserDefaultsManagerProtocol{
     
     static let shared: UserDefaultsManager =  UserDefaultsManager()
 
-    @Storage(key: USER_KEY.FavoriteAddList.rawValue, defaultValue : [])
+    @Storage(key: USER_KEY.FavoriteList.rawValue, defaultValue : [])
     var favoriteList : Accommodations
  
 }

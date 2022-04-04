@@ -259,7 +259,6 @@
 			children = (
 				7EE15BCB27F4148100EEA358 /* AppDelegate */,
 				7EE15BC127F4141000EEA358 /* AppSupportFile */,
-				7EB9707B27F5651A00A76710 /* CommonCell */,
 				7EE15BD327F4152A00EEA358 /* DesignCompoents */,
 				7EE15C4D27F44B9400EEA358 /* Manager */,
 				7EE15C3227F422EC00EEA358 /* Model */,
@@ -307,6 +306,7 @@
 		7EE15BC927F4145100EEA358 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7EB9707B27F5651A00A76710 /* CommonCell */,
 				7EE15C6427F46AD300EEA358 /* DetailView */,
 				7EE15C2B27F41A7300EEA358 /* FavoriteView */,
 				7EE15BCC27F4149000EEA358 /* MainView */,

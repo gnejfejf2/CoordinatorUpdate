@@ -23,10 +23,7 @@ class DetailViewModelTest: XCTestCase {
    
     var viewModel: DetailViewModel!
     var scheduler: TestScheduler!
-//    var viewWillAppear : PublishSubject<Void> = PublishSubject<Void>()
     var favortieAction :  PublishSubject<Void> = PublishSubject<Void>()
-//    var sortTypeAction :  PublishSubject<SortType> = PublishSubject<SortType>()
-//    var accomodationClick : PublishSubject<Accommodation> = PublishSubject<Accommodation>()
     var output : DetailViewModel.Output!
     
     var item = Accommodation(id: 2, name: "테스트2", thumbnail: "", description: .init(imagePath: "", subject: "", price: 40000), rate: 3)
